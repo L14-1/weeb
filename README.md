@@ -12,7 +12,7 @@ Le projet utilise trois branches principales :
 
 1. **dev** - Branche de développement
 2. **staging** - Branche de pré-production
-3. **main** - Branche de production
+3. **prod** - Branche de production
 
 ### Processus de déploiement
 
