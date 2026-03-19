@@ -1,21 +1,22 @@
-# Next.js template
+# Weeb Frontend
 
-This is a Next.js template with shadcn/ui.
+Application web développée avec NextJS, TanStack, React, TypeScript et shadcn/ui.
 
-## Adding components
+## Environnements
 
-To add components to your app, run the following command:
+- **Staging**: https://weeb.nicolasmaitre.dev
 
-```bash
-npx shadcn@latest add button
-```
+## Workflow Git
 
-This will place the ui components in the `components` directory.
+Le projet utilise trois branches principales :
 
-## Using components
+1. **dev** - Branche de développement
+2. **staging** - Branche de pré-production
+3. **main** - Branche de production
 
-To use the components in your app, import them as follows:
+### Processus de déploiement
 
-```tsx
-import { Button } from "@/components/ui/button";
-```
+1. Créer une branche de feature depuis `dev`
+2. Faire une PR vers `dev`
+3. De `dev`, faire une PR vers `staging`
+4. De `staging`, faire une PR vers `main`

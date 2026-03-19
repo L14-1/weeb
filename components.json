@@ -21,5 +21,10 @@
   },
   "menuColor": "default-translucent",
   "menuAccent": "subtle",
-  "registries": {}
+  "registries": {
+    "@aceternity": "https://ui.aceternity.com/registry/{name}.json",
+    "@eldoraui": "https://eldoraui.site/r/{name}.json",
+    "@magicui": "https://magicui.design/r/{name}.json",
+    "@efferd": "https://efferd.com/r/{name}.json"
+  }
 }
