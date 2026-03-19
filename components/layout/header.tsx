@@ -6,6 +6,8 @@ import { useScroll } from "@/hooks/use-scroll"
 import { cn } from "@/lib/utils"
 import LoginButton from "./login-button"
 import Link from "next/link"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
 export const navLinks = [
   {
@@ -13,6 +15,20 @@ export const navLinks = [
     href: "/contact",
   },
 ]
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme()
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+    >
+      <Sun className="h-4 w-4 dark:hidden" />
+      <Moon className="hidden h-4 w-4 dark:block" />
+    </Button>
+  )
+}
 
 export function Header() {
   const scrolled = useScroll(10)
@@ -51,6 +67,7 @@ export function Header() {
             ))}
           </div>
           <div className="flex gap-1">
+            <ThemeToggle />
             <LoginButton full={false} />
             <Button>Nous rejoindre</Button>
           </div>
