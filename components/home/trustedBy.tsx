@@ -21,7 +21,7 @@ export function TrustedBy() {
           speedOnHover={25}
         >
           <svg
-            className="h-5 md:h-8"
+            className="h-5 md:h-8 invert dark:invert-0"
             viewBox="0 0 177 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@ export function TrustedBy() {
             />
           </svg>
           <svg
-            className="h-5 md:h-8"
+            className="h-5 md:h-8 invert dark:invert-0"
             viewBox="0 0 133 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@ export function TrustedBy() {
             />
           </svg>
           <svg
-            className="h-5 md:h-8"
+            className="h-5 md:h-8 invert dark:invert-0"
             viewBox="0 0 125 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@ export function TrustedBy() {
             />
           </svg>
           <svg
-            className="h-5 md:h-8"
+            className="h-5 md:h-8 invert dark:invert-0"
             viewBox="0 0 110 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@ export function TrustedBy() {
             />
           </svg>
           <svg
-            className="h-5 md:h-8"
+            className="h-5 md:h-8 invert dark:invert-0"
             viewBox="0 0 166 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
