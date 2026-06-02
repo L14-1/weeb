@@ -1,4 +1,4 @@
-import { Button } from '../ui/button'
+import { Button } from "../ui/button"
 import {
   Dialog,
   DialogContent,
@@ -6,17 +6,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog'
-import { Field, FieldDescription, FieldGroup, FieldLabel } from '../ui/field'
-import { Input } from '../ui/input'
+} from "../ui/dialog"
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "../ui/field"
+import { Input } from "../ui/input"
 
 export default function LoginButton({ full }: { full: boolean }) {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button
-          variant={full ? 'outline' : 'ghost'}
-          className={full ? 'w-full' : ''}
+          variant={full ? "outline" : "ghost"}
+          className={full ? "w-full" : ""}
         >
           Se connecter
         </Button>
@@ -50,7 +50,7 @@ export default function LoginButton({ full }: { full: boolean }) {
             <Field>
               <Button type="submit">Se connecter</Button>
               <FieldDescription className="text-center">
-                Vous n'avez pas encore de compte ?{' '}
+                Vous n'avez pas encore de compte ?{" "}
                 <a href="#">Nous rejoindre</a>
               </FieldDescription>
             </Field>
