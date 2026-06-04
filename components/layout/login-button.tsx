@@ -1,3 +1,4 @@
+import { useLogout } from "@/hooks/use-auth"
 import { authApi, IAuthTokens, IUser } from "@/lib/api/auth"
 import { tokenStore } from "@/lib/api/auth-storage"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -28,10 +29,12 @@ export default function LoginButton({
   isLoading: boolean
 }) {
   const queryClient = useQueryClient()
+  const logout = useLogout()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
   const [open, setOpen] = useState(false)
+  const [logoutOpen, setLogoutOpen] = useState(false)
 
   const mutation = useMutation({
     mutationFn: authApi.login,
@@ -57,13 +60,38 @@ export default function LoginButton({
       <Loader className="h-4 w-4 spin-in" />
     </div>
   ) : currentUser ? (
-    <Button
-      variant={full ? "outline" : "ghost"}
-      className={full ? "w-full" : ""}
-    >
-      <CircleUserRound className="h-4 w-4" />
-      <p>{currentUser.first_name + " " + currentUser.last_name}</p>
-    </Button>
+    <Dialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant={full ? "outline" : "ghost"}
+          className={full ? "w-full" : ""}
+        >
+          <CircleUserRound className="h-4 w-4" />
+          <p>{currentUser.first_name + " " + currentUser.last_name}</p>
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Se déconnecter</DialogTitle>
+          <DialogDescription>
+            Êtes-vous sûr de vouloir vous déconnecter de votre compte ?
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex justify-end gap-2">
+          <Button variant="outline" onClick={() => setLogoutOpen(false)}>
+            Annuler
+          </Button>
+          <Button
+            onClick={() => {
+              logout()
+              setLogoutOpen(false)
+            }}
+          >
+            Se déconnecter
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   ) : (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

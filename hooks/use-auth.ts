@@ -16,6 +16,7 @@ export function useLogout() {
   const queryClient = useQueryClient()
   return () => {
     tokenStore.clear()
+    queryClient.setQueryData(["me"], null)
     queryClient.clear()
   }
 }
