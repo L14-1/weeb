@@ -1,16 +1,19 @@
 "use client"
 import { navLinks } from "@/components/layout/header"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { useCurrentUser } from "@/hooks/use-auth"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { MenuIcon, XIcon } from "lucide-react"
 import React from "react"
 import { createPortal } from "react-dom"
 import LoginButton from "./login-button"
+import RegisterButton from "./register-button"
 
 export function MobileNav() {
   const [open, setOpen] = React.useState(false)
   const { isMobile } = useMediaQuery()
+  const { data: currentUser, isLoading: userLoading } = useCurrentUser()
 
   React.useEffect(() => {
     if (open && isMobile) {
@@ -71,8 +74,12 @@ export function MobileNav() {
                 ))}
               </div>
               <div className="mt-12 flex flex-col gap-2">
-                <LoginButton full={true} />
-                <Button className="w-full">Nous rejoindre</Button>
+                <LoginButton
+                  full={true}
+                  currentUser={currentUser}
+                  isLoading={userLoading}
+                />
+                {!currentUser && <RegisterButton full={true} />}
               </div>
             </div>
           </div>,

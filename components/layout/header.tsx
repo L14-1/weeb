@@ -2,12 +2,14 @@
 
 import { MobileNav } from "@/components/layout/mobile-nav"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { useCurrentUser } from "@/hooks/use-auth"
 import { useScroll } from "@/hooks/use-scroll"
 import { cn } from "@/lib/utils"
-import LoginButton from "./login-button"
-import Link from "next/link"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import Link from "next/link"
+import LoginButton from "./login-button"
+import RegisterButton from "./register-button"
 
 export const navLinks = [
   {
@@ -32,6 +34,7 @@ function ThemeToggle() {
 
 export function Header() {
   const scrolled = useScroll(10)
+  const { data: currentUser, isLoading: userLoading } = useCurrentUser()
 
   return (
     <header
@@ -67,9 +70,13 @@ export function Header() {
             ))}
           </div>
           <div className="flex gap-1">
+            <LoginButton
+              full={false}
+              currentUser={currentUser}
+              isLoading={userLoading}
+            />
+            {!currentUser && !userLoading && <RegisterButton full={false} />}
             <ThemeToggle />
-            <LoginButton full={false} />
-            <Button>Nous rejoindre</Button>
           </div>
         </div>
         <MobileNav />
