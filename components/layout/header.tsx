@@ -9,6 +9,7 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import Link from "next/link"
 import LoginButton from "./login-button"
+import RegisterButton from "./register-button"
 
 export const navLinks = [
   {
@@ -74,7 +75,7 @@ export function Header() {
               currentUser={currentUser}
               isLoading={userLoading}
             />
-            {!currentUser && !userLoading && <Button>Nous rejoindre</Button>}
+            {!currentUser && !userLoading && <RegisterButton full={false} />}
             <ThemeToggle />
           </div>
         </div>

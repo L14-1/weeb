@@ -4,6 +4,9 @@ export interface IAuthTokens {
   access: string
   refresh: string
 }
+export interface IRegisterResponse {
+  detail: string
+}
 export interface IUser {
   id: number
   first_name: string
@@ -24,7 +27,7 @@ export const authApi = {
     last_name: string
     password: string
   }) =>
-    request<IAuthTokens>("auth/signup/", {
+    request<IRegisterResponse>("auth/signup/", {
       method: "POST",
       body: JSON.stringify(data),
     }),

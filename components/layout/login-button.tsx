@@ -2,7 +2,10 @@ import { authApi, IAuthTokens, IUser } from "@/lib/api/auth"
 import { tokenStore } from "@/lib/api/auth-storage"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { CircleUserRound, Loader } from "lucide-react"
+
+import { ApiError } from "@/lib/api/client"
 import { useState } from "react"
+import { toast } from "sonner"
 import { Button } from "../ui/button"
 import {
   Dialog,
@@ -34,13 +37,13 @@ export default function LoginButton({
     mutationFn: authApi.login,
     onSuccess: async (tokens: IAuthTokens) => {
       tokenStore.set(tokens.access, tokens.refresh)
-      await queryClient.refetchQueries({ queryKey: ["me"] })
+      await queryClient.fetchQuery({ queryKey: ["me"] })
       setOpen(false)
     },
-    onError: (e: any) => {
-      console.log(e)
-      // Toast error.
-      // fields error.
+    onError: (e: ApiError) => {
+      toast.error("Impossible de se connecter", {
+        description: "Identifiant et/ou mot de passe invalide.",
+      })
     },
   })
 

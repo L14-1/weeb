@@ -8,6 +8,7 @@ import { MenuIcon, XIcon } from "lucide-react"
 import React from "react"
 import { createPortal } from "react-dom"
 import LoginButton from "./login-button"
+import RegisterButton from "./register-button"
 
 export function MobileNav() {
   const [open, setOpen] = React.useState(false)
@@ -78,9 +79,7 @@ export function MobileNav() {
                   currentUser={currentUser}
                   isLoading={userLoading}
                 />
-                {!currentUser && (
-                  <Button className="w-full">Nous rejoindre</Button>
-                )}
+                {!currentUser && <RegisterButton full={true} />}
               </div>
             </div>
           </div>,
