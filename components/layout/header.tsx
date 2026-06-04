@@ -13,6 +13,10 @@ import RegisterButton from "./register-button"
 
 export const navLinks = [
   {
+    label: "Le blog",
+    href: "/articles",
+  },
+  {
     label: "Nous contacter",
     href: "/contact",
   },
