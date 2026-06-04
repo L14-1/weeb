@@ -1,9 +1,10 @@
 "use client"
 
 import { useForm } from "@tanstack/react-form"
-import * as React from "react"
 import { toast } from "sonner"
 import * as z from "zod"
+
+import { contactApi } from "@/lib/api/contact"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -22,10 +23,14 @@ import {
 } from "@/components/ui/input-group"
 
 const formSchema = z.object({
-  name: z.string(),
-  lastname: z.string(),
-  email: z.string(),
-  message: z.string(),
+  name: z.string().trim().min(1, "Le prénom est requis."),
+  lastname: z.string().trim().min(1, "Le nom est requis."),
+  email: z
+    .string()
+    .trim()
+    .min(1, "L'email est requis.")
+    .pipe(z.email("L'email est invalide.")),
+  message: z.string().trim().min(1, "Le message est requis."),
 })
 
 export function ContactForm() {
@@ -39,21 +44,23 @@ export function ContactForm() {
     validators: {
       onSubmit: formSchema,
     },
-    onSubmit: async ({ value }) => {
-      toast("You submitted the following values:", {
-        description: (
-          <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-            <code>{JSON.stringify(value, null, 2)}</code>
-          </pre>
-        ),
-        position: "bottom-right",
-        classNames: {
-          content: "flex flex-col gap-2",
-        },
-        style: {
-          "--border-radius": "calc(var(--radius)  + 4px)",
-        } as React.CSSProperties,
-      })
+    onSubmit: async ({ value, formApi }) => {
+      try {
+        await contactApi.send({
+          first_name: value.name,
+          last_name: value.lastname,
+          email: value.email,
+          message: value.message,
+        })
+        formApi.reset()
+        toast.success("Message envoyé", {
+          description: "Merci, nous vous répondrons dans les plus brefs délais.",
+        })
+      } catch {
+        toast.error("Échec de l'envoi", {
+          description: "Une erreur est survenue, veuillez réessayer.",
+        })
+      }
     },
   })
 
