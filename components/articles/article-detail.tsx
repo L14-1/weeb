@@ -19,9 +19,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
+import { BlurFade } from "@/components/ui/blur-fade"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
+import { TextAnimate } from "@/components/ui/text-animate"
 import { useCurrentUser } from "@/hooks/use-auth"
 import { articlesApi } from "@/lib/api/articles"
 
@@ -101,7 +103,14 @@ export function ArticleDetail({ id }: { id: number }) {
 
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <h1 className="text-4xl font-bold">{article.title}</h1>
+          <TextAnimate
+            as="h1"
+            animation="slideUp"
+            className="text-4xl font-bold"
+            startOnView={false}
+          >
+            {article.title}
+          </TextAnimate>
           {isAuthor && (
             <div className="flex gap-2">
               <EditArticleDialog article={article} />
@@ -138,25 +147,29 @@ export function ArticleDetail({ id }: { id: number }) {
           )}
         </div>
 
-        <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
-          <span>
-            {article.owner.first_name} {article.owner.last_name}
-          </span>
-          <Badge variant="secondary">{article.owner.role}</Badge>
-          <span>·</span>
-          <span>Publié le {formatDate(article.created_at)}</span>
-          {article.updated_at !== article.created_at && (
-            <>
-              <span>·</span>
-              <span>Modifié le {formatDate(article.updated_at)}</span>
-            </>
-          )}
-        </div>
+        <BlurFade delay={0.2}>
+          <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
+            <span>
+              {article.owner.first_name} {article.owner.last_name}
+            </span>
+            <Badge variant="secondary">{article.owner.role}</Badge>
+            <span>·</span>
+            <span>Publié le {formatDate(article.created_at)}</span>
+            {article.updated_at !== article.created_at && (
+              <>
+                <span>·</span>
+                <span>Modifié le {formatDate(article.updated_at)}</span>
+              </>
+            )}
+          </div>
+        </BlurFade>
       </div>
 
       <Separator />
 
-      <p className="leading-relaxed whitespace-pre-wrap">{article.content}</p>
+      <BlurFade delay={0.4} blur="8px">
+        <p className="leading-relaxed whitespace-pre-wrap">{article.content}</p>
+      </BlurFade>
     </article>
   )
 }
