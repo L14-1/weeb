@@ -33,4 +33,20 @@ export const authApi = {
     }),
 
   me: () => request<IUser>("auth/me/"),
+
+  passwordResetRequest: (data: { email: string }) =>
+    request<{ detail: string }>("auth/password-reset/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+
+  passwordResetConfirm: (data: {
+    uid: string
+    token: string
+    password: string
+  }) =>
+    request<{ detail: string }>("auth/password-reset/confirm/", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 }

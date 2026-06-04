@@ -35,6 +35,8 @@ export default function LoginButton({
 
   const [open, setOpen] = useState(false)
   const [logoutOpen, setLogoutOpen] = useState(false)
+  const [resetOpen, setResetOpen] = useState(false)
+  const [resetEmail, setResetEmail] = useState("")
 
   const mutation = useMutation({
     mutationFn: authApi.login,
@@ -50,9 +52,31 @@ export default function LoginButton({
     },
   })
 
+  const resetMutation = useMutation({
+    mutationFn: authApi.passwordResetRequest,
+    onSuccess: () => {
+      setResetOpen(false)
+      setResetEmail("")
+      toast.success("Email envoyé", {
+        description:
+          "Si un compte existe pour cet email, vous allez recevoir un lien pour réinitialiser votre mot de passe.",
+      })
+    },
+    onError: () => {
+      toast.error("Échec de l'envoi", {
+        description: "Veuillez réessayer.",
+      })
+    },
+  })
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     mutation.mutate({ username, password })
+  }
+
+  const handleResetSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    resetMutation.mutate({ email: resetEmail.trim() })
   }
 
   return isLoading ? (
@@ -93,62 +117,102 @@ export default function LoginButton({
       </DialogContent>
     </Dialog>
   ) : (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant={full ? "outline" : "ghost"}
-          className={full ? "w-full" : ""}
-        >
-          Se connecter
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Se connecter à votre compte</DialogTitle>
-          <DialogDescription>
-            Entrez votre email et mot de passe ci dessous pour vous connecter à
-            votre compte.
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="exemple@mail.com"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Field>
-            <Field>
-              <div className="flex items-center">
-                <FieldLabel htmlFor="password">Mot de passe</FieldLabel>
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-xs underline-offset-4 hover:underline"
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button
+            variant={full ? "outline" : "ghost"}
+            className={full ? "w-full" : ""}
+          >
+            Se connecter
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Se connecter à votre compte</DialogTitle>
+            <DialogDescription>
+              Entrez votre email et mot de passe ci dessous pour vous connecter
+              à votre compte.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit}>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="exemple@mail.com"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Field>
+              <Field>
+                <div className="flex items-center">
+                  <FieldLabel htmlFor="password">Mot de passe</FieldLabel>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpen(false)
+                      setResetOpen(true)
+                    }}
+                    className="ml-auto inline-block text-xs underline-offset-4 hover:underline"
+                  >
+                    Mot de passe oublié ?
+                  </button>
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Field>
+              <Field>
+                <Button type="submit" disabled={mutation.isPending}>
+                  {mutation.isPending ? "Connexion…" : "Se connecter"}
+                </Button>
+                <FieldDescription className="text-center">
+                  Vous n’avez pas encore de compte ?{" "}
+                  <a href="#">Nous rejoindre</a>
+                </FieldDescription>
+              </Field>
+            </FieldGroup>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={resetOpen} onOpenChange={setResetOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Réinitialiser votre mot de passe</DialogTitle>
+            <DialogDescription>
+              Entrez votre email, nous vous enverrons un lien pour réinitialiser
+              votre mot de passe.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleResetSubmit}>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="reset_email">Email</FieldLabel>
+                <Input
+                  id="reset_email"
+                  type="email"
+                  placeholder="exemple@mail.com"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                />
+              </Field>
+              <Field>
+                <Button
+                  type="submit"
+                  disabled={resetMutation.isPending || !resetEmail.trim()}
                 >
-                  Mot de passe oublié ?
-                </a>
-              </div>
-              <Input
-                id="password"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Field>
-            <Field>
-              <Button type="submit" disabled={mutation.isPending}>
-                {mutation.isPending ? "Connexion…" : "Se connecter"}
-              </Button>
-              <FieldDescription className="text-center">
-                Vous n'avez pas encore de compte ?{" "}
-                <a href="#">Nous rejoindre</a>
-              </FieldDescription>
-            </Field>
-          </FieldGroup>
-        </form>
-      </DialogContent>
-    </Dialog>
+                  {resetMutation.isPending ? "Envoi…" : "Envoyer le lien"}
+                </Button>
+              </Field>
+            </FieldGroup>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
