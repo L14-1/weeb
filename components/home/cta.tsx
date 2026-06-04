@@ -1,18 +1,18 @@
-import { BlurFade } from '../ui/blur-fade'
-import { Button } from '../ui/button'
-import ColourAnimatedText from '../ui/colourful-text'
-import { TextAnimate } from '../ui/text-animate'
+import { BlurFade } from "../ui/blur-fade"
+import { Button } from "../ui/button"
+import ColourAnimatedText from "../ui/colourful-text"
+import { TextAnimate } from "../ui/text-animate"
 
 export function Cta() {
   return (
     <div className="flex flex-col gap-20">
-      <h2 className="text-4xl md:text-7xl text-center font-extrabold">
-        Explorez le <ColourAnimatedText text="web" /> sous toutes ses{' '}
-        <div className="inline-block relative">
+      <h2 className="text-center text-4xl font-extrabold md:text-7xl">
+        Explorez le <ColourAnimatedText text="web" /> sous toutes ses{" "}
+        <div className="relative inline-block">
           facettes
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="absolute left-1/12 top-1/1 w-10/12"
+            className="absolute top-1/1 left-1/12 w-10/12"
             viewBox="0 0 69.24294 15.80886"
           >
             <path
@@ -23,16 +23,16 @@ export function Cta() {
           </svg>
         </div>
       </h2>
-      <p className="text-center mx-auto max-w-11/12 text-sm md:text-base">
+      <div className="mx-auto max-w-11/12 text-center text-sm md:text-base">
         <TextAnimate animation="blurIn">
           Le monde du web évolue constamment, et nous sommes là pour vous guider
           à travers ses tendances, technologies et meilleures pratiques. Que
           vous soyez développeur, designer ou passionné du digital, notre blog
           vous offre du contenu de qualité pour rester à la pointe.
         </TextAnimate>
-      </p>
+      </div>
       <BlurFade blur="16px" delay={0.8} duration={0.7}>
-        <div className="flex justify-center flex-col gap-4 md:flex-row">
+        <div className="flex flex-col justify-center gap-4 md:flex-row">
           <Button size="lg" variant="outline">
             Découvrir les articles
           </Button>

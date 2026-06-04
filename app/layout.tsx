@@ -1,14 +1,16 @@
-import { Geist, Geist_Mono, Roboto } from "next/font/google"
+import { Geist_Mono, Roboto } from "next/font/google"
 
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils"
-import { Header } from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
-import { Spotlight } from "@/components/ui/spotlight-new"
+import { Header } from "@/components/layout/header"
+import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { Spotlight } from "@/components/ui/spotlight-new"
+import { cn } from "@/lib/utils"
 import { Metadata } from "next"
 import Script from "next/script"
+import { getQueryClient } from "./get-query-client"
+import "./globals.css"
+import { Providers } from "./providers"
 
 const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -38,6 +40,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const queryClient = getQueryClient()
   return (
     <html
       lang="fr"
@@ -59,13 +62,15 @@ export default function RootLayout({
         />
       </head>
       <body className="overflow-x-hidden">
-        <ThemeProvider>
-          <Header />
-          <main className="px-4 pt-30 lg:px-0">{children}</main>
-          <Footer />
-          <Spotlight />
-          <Toaster />
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider>
+            <Header />
+            <main className="px-4 pt-30 lg:px-0">{children}</main>
+            <Footer />
+            <Spotlight />
+            <Toaster />
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )
