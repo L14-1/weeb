@@ -2,14 +2,27 @@
 import { authApi } from "@/lib/api/auth"
 import { tokenStore } from "@/lib/api/auth-storage"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useSyncExternalStore } from "react"
+
+const noopSubscribe = () => () => {}
+
+function useIsClient() {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  )
+}
 
 export function useCurrentUser() {
-  return useQuery({
+  const isClient = useIsClient()
+  const query = useQuery({
     queryKey: ["me"],
     queryFn: authApi.me,
-    enabled: typeof window !== "undefined" && !!tokenStore.getAccess(),
+    enabled: isClient && !!tokenStore.getAccess(),
     retry: false,
   })
+  return { ...query, isLoading: !isClient || query.isLoading }
 }
 
 export function useLogout() {
