@@ -1,6 +1,6 @@
-'use client'
-import { motion, MotionValue, useScroll, useTransform } from 'motion/react'
-import React, { useRef } from 'react'
+"use client"
+import { motion, MotionValue, useScroll, useTransform } from "motion/react"
+import React, { useRef } from "react"
 
 export const ContainerScroll = ({
   titleComponent,
@@ -20,9 +20,9 @@ export const ContainerScroll = ({
       setIsMobile(window.innerWidth <= 768)
     }
     checkMobile()
-    window.addEventListener('resize', checkMobile)
+    window.addEventListener("resize", checkMobile)
     return () => {
-      window.removeEventListener('resize', checkMobile)
+      window.removeEventListener("resize", checkMobile)
     }
   }, [])
 
@@ -44,13 +44,13 @@ export const ContainerScroll = ({
 
   return (
     <div
-      className="h-240 md:h-300 flex items-center justify-center relative p-2 md:p-20"
+      className="relative flex h-240 items-center justify-center p-2 md:h-300 md:p-20"
       ref={containerRef}
     >
       <div
-        className="py-10 md:py-40 w-full relative"
+        className="relative w-full py-10 md:py-40"
         style={{
-          perspective: '1000px',
+          perspective: "1000px",
         }}
       >
         <Header translate={translate} titleComponent={titleComponent} />
@@ -62,13 +62,19 @@ export const ContainerScroll = ({
   )
 }
 
-export const Header = ({ translate, titleComponent }: any) => {
+export const Header = ({
+  translate,
+  titleComponent,
+}: {
+  translate: MotionValue<number>
+  titleComponent: string | React.ReactNode
+}) => {
   return (
     <motion.div
       style={{
         translateY: translate,
       }}
-      className="div max-w-5xl mx-auto text-center"
+      className="div mx-auto max-w-5xl text-center"
     >
       {titleComponent}
     </motion.div>
@@ -91,7 +97,7 @@ export const Card = ({
         rotateX: rotate,
         scale,
       }}
-      className="max-w-5xl mt-16 mx-auto h-120 md:h-160 w-full"
+      className="mx-auto mt-16 h-120 w-full max-w-5xl md:h-160"
     >
       <div className="h-full w-full overflow-hidden">{children}</div>
     </motion.div>

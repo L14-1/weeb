@@ -38,7 +38,7 @@ export function Cta() {
           <Button size="lg" variant="outline" asChild>
             <Link href="/articles">Découvrir les articles</Link>
           </Button>
-          <Button size="lg">S'abonner à la newsletter</Button>
+          <Button size="lg">S&apos;abonner à la newsletter</Button>
         </div>
       </BlurFade>
     </div>

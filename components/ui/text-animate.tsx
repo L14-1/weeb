@@ -1,6 +1,6 @@
 "use client"
 
-import { ElementType, memo } from "react"
+import { memo } from "react"
 import { AnimatePresence, motion, MotionProps, Variants } from "motion/react"
 
 import { cn } from "@/lib/utils"
@@ -46,7 +46,7 @@ interface TextAnimateProps extends MotionProps {
   /**
    * The element type to render
    */
-  as?: ElementType
+  as?: keyof typeof motionTags
   /**
    * How to split the text ("text", "word", "character")
    */
@@ -317,7 +317,7 @@ const TextAnimateBase = ({
   accessible = true,
   ...props
 }: TextAnimateProps) => {
-  const MotionComponent = motion.create(Component)
+  const MotionComponent = motionTags[Component]
 
   let segments: string[] = []
   switch (by) {
@@ -416,4 +416,16 @@ const TextAnimateBase = ({
 }
 
 // Export the memoized version
+const motionTags = {
+  p: motion.p,
+  span: motion.span,
+  div: motion.div,
+  h1: motion.h1,
+  h2: motion.h2,
+  h3: motion.h3,
+  h4: motion.h4,
+  h5: motion.h5,
+  h6: motion.h6,
+}
+
 export const TextAnimate = memo(TextAnimateBase)
