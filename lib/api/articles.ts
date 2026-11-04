@@ -10,12 +10,13 @@ export interface IArticleOwner {
 }
 
 export interface IArticle {
-  id: number
+  uuid: string
   title: string
   content: string
   owner: IArticleOwner
   created_at: string
   updated_at: string
+  deleted_at: string | null
 }
 
 export interface IArticleInput {
@@ -26,7 +27,7 @@ export interface IArticleInput {
 export const articlesApi = {
   list: () => request<IArticle[]>("articles/"),
 
-  getById: (id: number) => request<IArticle>(`articles/${id}/`),
+  getById: (uuid: string) => request<IArticle>(`articles/${uuid}/`),
 
   create: (data: IArticleInput) =>
     request<IArticle>("articles/", {
@@ -34,14 +35,14 @@ export const articlesApi = {
       body: JSON.stringify(data),
     }),
 
-  update: (id: number, data: Partial<IArticleInput>) =>
-    request<IArticle>(`articles/${id}/`, {
+  update: (uuid: string, data: Partial<IArticleInput>) =>
+    request<IArticle>(`articles/${uuid}/`, {
       method: "PATCH",
       body: JSON.stringify(data),
     }),
 
-  remove: (id: number) =>
-    request<null>(`articles/${id}/`, {
+  remove: (uuid: string) =>
+    request<null>(`articles/${uuid}/`, {
       method: "DELETE",
     }),
 }

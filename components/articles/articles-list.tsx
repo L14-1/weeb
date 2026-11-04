@@ -63,15 +63,15 @@ export function ArticlesList() {
       ) : articles && articles.length > 0 ? (
         <div className="flex flex-col gap-3">
           {articles.map((article, i) => (
-            <BlurFade key={article.id} delay={i * 0.1} inView>
-              <Link href={`/articles/${article.id}`}>
+            <BlurFade key={article.uuid} delay={i * 0.1} inView>
+              <Link href={`/articles/${article.uuid}`}>
                 <Card
                   size="sm"
-                  className="hover:bg-accent/50 transition-colors"
+                  className="transition-colors hover:bg-accent/50"
                 >
                   <CardHeader>
                     <CardTitle className="truncate">{article.title}</CardTitle>
-                    <CardAction className="text-muted-foreground self-start text-xs whitespace-nowrap">
+                    <CardAction className="self-start text-xs whitespace-nowrap text-muted-foreground">
                       {article.owner.first_name} {article.owner.last_name} ·{" "}
                       {formatDate(article.created_at)}
                     </CardAction>

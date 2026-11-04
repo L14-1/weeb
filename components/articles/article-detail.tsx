@@ -37,7 +37,7 @@ function formatDate(value: string) {
   })
 }
 
-export function ArticleDetail({ id }: { id: number }) {
+export function ArticleDetail({ uuid }: { uuid: string }) {
   const router = useRouter()
   const queryClient = useQueryClient()
   const { data: currentUser } = useCurrentUser()
@@ -47,15 +47,15 @@ export function ArticleDetail({ id }: { id: number }) {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["articles", id],
-    queryFn: () => articlesApi.getById(id),
+    queryKey: ["articles", uuid],
+    queryFn: () => articlesApi.getById(uuid),
   })
 
   const deleteMutation = useMutation({
-    mutationFn: () => articlesApi.remove(id),
+    mutationFn: () => articlesApi.remove(uuid),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["articles"] })
-      queryClient.removeQueries({ queryKey: ["articles", id] })
+      queryClient.removeQueries({ queryKey: ["articles", uuid] })
       toast.success("Article supprimé")
       router.push("/articles")
     },
@@ -148,7 +148,7 @@ export function ArticleDetail({ id }: { id: number }) {
         </div>
 
         <BlurFade delay={0.2}>
-          <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <span>
               {article.owner.first_name} {article.owner.last_name}
             </span>
