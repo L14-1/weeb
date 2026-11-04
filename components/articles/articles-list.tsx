@@ -1,10 +1,11 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 import Link from "next/link"
 
 import { CreateArticleDialog } from "@/components/articles/create-article-dialog"
 import { BlurFade } from "@/components/ui/blur-fade"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardAction,
@@ -27,13 +28,20 @@ function formatDate(value: string) {
 
 export function ArticlesList() {
   const {
-    data: articles,
+    data,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ["articles"],
-    queryFn: articlesApi.list,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["articles", "list"],
+    queryFn: ({ pageParam }) => articlesApi.list(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, _pages, lastPageParam) =>
+      lastPage.next ? lastPageParam + 1 : undefined,
   })
+  const articles = data?.pages.flatMap((page) => page.results)
   const { data: currentUser } = useCurrentUser()
 
   return (
@@ -63,7 +71,7 @@ export function ArticlesList() {
       ) : articles && articles.length > 0 ? (
         <div className="flex flex-col gap-3">
           {articles.map((article, i) => (
-            <BlurFade key={article.uuid} delay={i * 0.1} inView>
+            <BlurFade key={article.uuid} delay={(i % 10) * 0.1} inView>
               <Link href={`/articles/${article.uuid}`}>
                 <Card
                   size="sm"
@@ -83,6 +91,16 @@ export function ArticlesList() {
               </Link>
             </BlurFade>
           ))}
+          {hasNextPage && (
+            <Button
+              variant="outline"
+              className="self-center"
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? "Chargement..." : "Voir plus d'articles"}
+            </Button>
+          )}
         </div>
       ) : (
         <p className="text-muted-foreground">Aucun article pour le moment.</p>

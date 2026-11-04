@@ -19,13 +19,20 @@ export interface IArticle {
   deleted_at: string | null
 }
 
+export interface IPaginated<T> {
+  count: number
+  next: string | null
+  previous: string | null
+  results: T[]
+}
+
 export interface IArticleInput {
   title: string
   content: string
 }
 
 export const articlesApi = {
-  list: () => request<IArticle[]>("articles/"),
+  list: (page = 1) => request<IPaginated<IArticle>>(`articles/?page=${page}`),
 
   getById: (uuid: string) => request<IArticle>(`articles/${uuid}/`),
 
