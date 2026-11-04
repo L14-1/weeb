@@ -1,6 +1,7 @@
 import { Geist_Mono, Roboto } from "next/font/google"
 
 import Footer from "@/components/layout/footer"
+import { HyperDXProvider } from "@/components/hyperdx"
 import { Header } from "@/components/layout/header"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
@@ -64,6 +65,7 @@ export default function RootLayout({
       </head>
       <body className="overflow-x-hidden">
         <Providers>
+          <HyperDXProvider />
           <ThemeProvider>
             <Header />
             <main className="px-4 pt-30 lg:px-0">{children}</main>
