@@ -33,9 +33,9 @@ export function EditArticleDialog({
 
   const mutation = useMutation({
     mutationFn: (data: { title: string; content: string }) =>
-      articlesApi.update(article.id, data),
+      articlesApi.update(article.uuid, data),
     onSuccess: (updated) => {
-      queryClient.setQueryData(["articles", article.id], updated)
+      queryClient.setQueryData(["articles", article.uuid], updated)
       queryClient.invalidateQueries({ queryKey: ["articles"] })
       setOpen(false)
       toast.success("Article modifié")
