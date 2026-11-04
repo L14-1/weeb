@@ -1,4 +1,4 @@
-import { Geist_Mono, Roboto } from "next/font/google"
+import { Roboto } from "next/font/google"
 
 import Footer from "@/components/layout/footer"
 import { HyperDXProvider } from "@/components/hyperdx"
@@ -13,13 +13,7 @@ import { getQueryClient } from "./get-query-client"
 import "./globals.css"
 import { Providers } from "./providers"
 
-const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" })
-
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  preload: false,
-})
+const roboto = Roboto({ subsets: ["latin"], variable: "--font-roboto" })
 
 export const metadata: Metadata = {
   title: "Weeb - Explorez le web sous toutes ses facettes.",
@@ -49,7 +43,6 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(
         "antialiased",
-        fontMono.variable,
         "font-sans",
         "scroll-smooth",
         roboto.variable
