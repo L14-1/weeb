@@ -11,7 +11,7 @@ export default function Page() {
     <main className="mx-auto w-5xl max-w-full pb-30">
       <ContainerScroll titleComponent={<Cta />}>
         <BlurFade blur="8px" delay={0.3} duration={0.5}>
-          <img src={"./images/preview.png"} alt="preview" />
+          <img src={"/images/preview.png"} alt="preview" />
         </BlurFade>
       </ContainerScroll>
       <TrustedBy />
@@ -31,7 +31,7 @@ export default function Page() {
             </Highlighter>
           </h4>
         }
-        imageUrl={"./images/preview.png"}
+        imageUrl={"/images/preview.png"}
         imageSize="md:w-13/24"
       />
       <ImageRessource
@@ -48,7 +48,7 @@ export default function Page() {
             </Highlighter>
           </h4>
         }
-        imageUrl={"./images/shapes.png"}
+        imageUrl={"/images/shapes.png"}
         imageSize="md:w-4/12"
       />
     </main>
