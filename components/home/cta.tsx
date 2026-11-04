@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import { BlurFade } from "../ui/blur-fade"
 import { Button } from "../ui/button"
 import ColourAnimatedText from "../ui/colourful-text"
@@ -33,8 +35,8 @@ export function Cta() {
       </div>
       <BlurFade blur="16px" delay={0.8} duration={0.7}>
         <div className="flex flex-col justify-center gap-4 md:flex-row">
-          <Button size="lg" variant="outline">
-            Découvrir les articles
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/articles">Découvrir les articles</Link>
           </Button>
           <Button size="lg">S'abonner à la newsletter</Button>
         </div>

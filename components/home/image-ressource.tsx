@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import { cn } from "@/lib/utils"
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -10,6 +12,7 @@ export type ImageRessourceProps = {
   title: React.ReactNode
   description: string
   linkTitle: string
+  linkHref: string
   imageUrl: string
   orientation?: "reverse" | "normal"
   imageSize?: string
@@ -22,6 +25,7 @@ export default function ImageRessource({
   title,
   description,
   linkTitle,
+  linkHref,
   imageUrl,
   orientation = "normal",
   imageSize = "w-1/2",
@@ -47,13 +51,15 @@ export default function ImageRessource({
           </TextAnimate>
         </div>
         <div>
-          <Button variant={"link"} className="pl-0">
-            {linkTitle}{" "}
-            <HugeiconsIcon
-              height={20}
-              icon={ArrowRight02Icon}
-              className="md:-translate-y-0.5"
-            />
+          <Button variant={"link"} className="pl-0" asChild>
+            <Link href={linkHref}>
+              {linkTitle}{" "}
+              <HugeiconsIcon
+                height={20}
+                icon={ArrowRight02Icon}
+                className="md:-translate-y-0.5"
+              />
+            </Link>
           </Button>
         </div>
       </div>
