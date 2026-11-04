@@ -19,6 +19,7 @@ export default function Page() {
         headtitle="Des ressources pour tous les niveaux"
         description="Que vous débutiez en développement web ou que vous soyez un expert cherchant à approfondir vos connaissances, nous vous proposons des tutoriels, guides et bonnes pratiques pour apprendre efficacement."
         linkTitle="Explorez les ressources"
+        linkHref="/articles"
         title={
           <h4 className="text-4xl font-bold md:text-5xl">
             <Highlighter action="highlight" color="#C084FC" isView={true}>
@@ -37,6 +38,7 @@ export default function Page() {
         headtitle="Le web, un écosystème en constante évolution"
         description="Chaque semaine, nous analysons les nouveautés du web : frameworks émergents, bonnes pratiques SEO, accessibilité, et bien plus encore. Ne manquez aucune actualité du digital !"
         linkTitle="Lire les articles récents"
+        linkHref="/articles"
         orientation="reverse"
         title={
           <h4 className="text-4xl font-bold md:text-5xl">

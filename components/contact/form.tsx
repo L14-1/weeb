@@ -54,7 +54,8 @@ export function ContactForm() {
         })
         formApi.reset()
         toast.success("Message envoyé", {
-          description: "Merci, nous vous répondrons dans les plus brefs délais.",
+          description:
+            "Merci, nous vous répondrons dans les plus brefs délais.",
         })
       } catch {
         toast.error("Échec de l'envoi", {
@@ -70,9 +71,8 @@ export function ContactForm() {
         <form id="contact-form">
           <FieldGroup>
             <div className="grid grid-cols-2 gap-4">
-              <form.Field
-                name="name"
-                children={(field) => {
+              <form.Field name="name">
+                {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
@@ -94,11 +94,10 @@ export function ContactForm() {
                     </Field>
                   )
                 }}
-              />
+              </form.Field>
 
-              <form.Field
-                name="lastname"
-                children={(field) => {
+              <form.Field name="lastname">
+                {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
@@ -120,11 +119,10 @@ export function ContactForm() {
                     </Field>
                   )
                 }}
-              />
+              </form.Field>
             </div>
-            <form.Field
-              name="email"
-              children={(field) => {
+            <form.Field name="email">
+              {(field) => {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid
                 return (
@@ -146,10 +144,9 @@ export function ContactForm() {
                   </Field>
                 )
               }}
-            />
-            <form.Field
-              name="message"
-              children={(field) => {
+            </form.Field>
+            <form.Field name="message">
+              {(field) => {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid
                 return (
@@ -179,7 +176,7 @@ export function ContactForm() {
                   </Field>
                 )
               }}
-            />
+            </form.Field>
           </FieldGroup>
         </form>
       </CardContent>
